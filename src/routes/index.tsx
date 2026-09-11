@@ -28,13 +28,14 @@ export const Route = createFileRoute("/")({
 
 function Hero() {
   const [i, setI] = useState(0);
-  useEffect(() => {
-  heroSlides.forEach((s: any) => {
-    const img = new Image();
-    img.src = s.image;
-  });
-}, []);
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  // helper
+  const getOptimized = (url: string) => {
+    if (!url) return url
+    if (url.includes('supabase')) return `${url}?width=1080&quality=75&format=webp`
+    return url
+  }
 
   useEffect(() => {
     setHasLoaded(true);
@@ -42,10 +43,20 @@ function Hero() {
     return () => clearInterval(t);
   }, []);
 
+  // preload NEXT slide only, after 3 sec - not all at once
+  useEffect(() => {
+    const next = heroSlides[(i + 1) % heroSlides.length]?.image
+    if (!next) return
+    const id = setTimeout(() => {
+      const img = new Image()
+      img.src = getOptimized(next)
+    }, 3000)
+    return () => clearTimeout(id)
+  }, [i]);
+
   return (
     <section className="relative h-[85vh] min-h-[520px] w-full overflow-hidden bg-[#120a0d]">
 
-      {/* FALL ANIMATION ON FIRST LOAD */}
       <motion.div
         initial={{ y: -150, opacity: 0 }}
         animate={hasLoaded? { y: 0, opacity: 1 } : {}}
@@ -61,8 +72,13 @@ function Hero() {
         <AnimatePresence mode="wait">
           <motion.img
             key={i}
-            src={heroSlides[i]?.image}
+            src={getOptimized(heroSlides[i]?.image)}
             alt={heroSlides[i]?.subtitle}
+            width={1080}
+            height={1350}
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding="async"
             onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
             initial={{ y: -80, scale: 1.15, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
@@ -74,7 +90,6 @@ function Hero() {
         <div className="absolute inset-0 bg-black/45" />
       </motion.div>
 
-      {/* TEXT ALSO FALLS AFTER IMAGE */}
       <motion.div
         initial={{ y: 40, opacity: 0 }}
         animate={hasLoaded? { y: 0, opacity: 1 } : {}}
@@ -103,6 +118,7 @@ function Hero() {
           <button
             key={idx}
             onClick={() => setI(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
             className={`h-[2px] transition-all ${idx === i? "w-8 bg-white" : "w-4 bg-white/30"}`}
           />
         ))}

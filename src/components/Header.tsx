@@ -34,11 +34,20 @@ export function Header() {
                         shadow-[0_8px_30px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.05)]">
 
           <div className="flex items-center gap-3">
-            <button className="md:hidden p-1" onClick={() => setOpen(!open)}>
+            <button className="md:hidden p-1" onClick={() => setOpen(!open)} aria-label="Menu">
               {open? <X size={20}/> : <Menu size={20}/>}
             </button>
             <Link to="/" className="flex items-center gap-2.5">
-              <img src="/favicon.png" alt="AK" className="h-9 w-9 rounded-full border border-[#e8ddd0] object-cover" />
+              <img
+                src="/favicon.png"
+                alt="AK"
+                width={36}
+                height={36}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="h-9 w-9 rounded-full border border-[#e8ddd0] object-cover"
+              />
               <span className="font-display uppercase tracking-[0.22em] text-[13px] md:text-[14px]">AK Drapes</span>
             </Link>
           </div>
