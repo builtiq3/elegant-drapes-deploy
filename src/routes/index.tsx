@@ -28,6 +28,12 @@ export const Route = createFileRoute("/")({
 
 function Hero() {
   const [i, setI] = useState(0);
+  useEffect(() => {
+  heroSlides.forEach((s: any) => {
+    const img = new Image();
+    img.src = s.image;
+  });
+}, []);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
