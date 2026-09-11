@@ -23,7 +23,7 @@ export type Product = {
 export const FALLBACK_IMAGE = "/hero1.webp";
 
 // Temporary images until you upload real saree photos
-const TEMP = "/favicon.png";
+const TEMP = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
 const STATIC: Omit<Product, "images">[] = [
   { id: "ak-01", name: "Meher Kanjivaram Silk", price: 18900, fabric: "Silk", color: "Maroon", image: TEMP, hoverImage: TEMP, tag: "Bestseller" },

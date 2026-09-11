@@ -29,32 +29,29 @@ export const Route = createFileRoute("/")({
 });
 
 function Hero() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setI(v => (v + 1) % heroSlides.length), 6500);
-    return () => clearInterval(t);
-  }, []);
-
   return (
-    <section className="relative h-[85vh] min-h-[520px] w-full overflow-hidden bg-[#120a0d]">
-      <img
-        src={heroSlides[i]?.image}
-        alt="AK Drapes"
-        width={1080}
-        height={1350}
-        // @ts-ignore
-        fetchPriority="high"
-        loading="eager"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-black/45" />
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
-        <h1 className="mt-4 font-serif text-[40px] sm:text-[64px]">{heroSlides[i]?.title}</h1>
-        <p className="mt-3 text-[13px] text-white/70">{heroSlides[i]?.subtitle}</p>
-        <Link to="/shop" className="mt-8 bg-[#7B1E2E] px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] text-white">Shop Now</Link>
-      </div>
-    </section>
+    <>
+      {/* This style makes browser load image before React */}
+      <link rel="preload" as="image" href="/hero1.webp" fetchPriority="high" />
+      <section className="relative h-[85vh] min-h-[520px] w-full overflow-hidden bg-[#120a0d]">
+        <img
+          src="/hero1.webp"
+          alt="AK Drapes Festive Edit"
+          width={1080}
+          height={1350}
+          fetchPriority="high"
+          loading="eager"
+          decoding="sync"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} />
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
+          <h1 className="mt-4 font-serif text-[40px] sm:text-[64px]">SAREE</h1>
+          <p className="mt-3 text-[13px] text-white/70">The Festive Edit 2026</p>
+          <Link to="/shop" className="mt-8 bg-[#7B1E2E] px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] text-white">Shop Now</Link>
+        </div>
+      </section>
+    </>
   );
 }
 
