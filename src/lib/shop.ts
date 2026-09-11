@@ -20,7 +20,7 @@ export type Product = {
 };
 
 // Use YOUR logo as fallback, not dead links
-export const FALLBACK_IMAGE = "/favicon.png";
+export const FALLBACK_IMAGE = "/hero1.jpeg";
 
 // Temporary images until you upload real saree photos
 const TEMP = "/favicon.png";
@@ -52,9 +52,9 @@ export function setRuntimeProducts(list: Product[]) {
 export const allProducts = () => runtimeProducts.length ? runtimeProducts : products;
 
 export const heroSlides = [
-  { image: TEMP, title: "The Festive Edit 2026", subtitle: "Handwoven drapes for the season" },
-  { image: TEMP, title: "The Festive Edit 2026", subtitle: "Organza, silk and tissue — draped to perfection" },
-  { image: TEMP, title: "The Festive Edit 2026", subtitle: "Limited atelier pieces" },
+  { image: "/hero1.jpeg", title: "SAREE", subtitle: "The Festive Edit 2026" },
+  { image: "/hero2.jpeg", title: "BANARASI", subtitle: "Handwoven atelier drapes" },
+  { image: "/hero1.jpeg", title: "ORGANZA", subtitle: "Limited festive pieces" },
 ];
 
 export const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;

@@ -28,94 +28,78 @@ export const Route = createFileRoute("/")({
 
 function Hero() {
   const [i, setI] = useState(0);
-  const reduceMotion = useReducedMotion();
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 90, damping: 24 });
-  const smoothY = useSpring(pointerY, { stiffness: 90, damping: 24 });
-  const textX = useTransform(smoothX, (value) => value * 0.02);
-  const textY = useTransform(smoothY, (value) => value * 0.02);
-  const productX = useTransform(smoothX, (value) => value * 0.05);
-  const productY = useTransform(smoothY, (value) => value * 0.05);
-  const dustX = useTransform(smoothX, (value) => value * 0.1);
-  const dustY = useTransform(smoothY, (value) => value * 0.1);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   useEffect(() => {
+    setHasLoaded(true);
     const t = setInterval(() => setI((v) => (v + 1) % heroSlides.length), 5500);
     return () => clearInterval(t);
   }, []);
 
   return (
-    <section
-      className="hero-stage relative h-[72svh] min-h-[420px] w-full overflow-hidden sm:h-[78vh] sm:min-h-[520px]"
-      onPointerMove={(event) => {
-        if (reduceMotion || event.pointerType === "touch") return;
-        pointerX.set(event.clientX - window.innerWidth / 2);
-        pointerY.set(event.clientY - window.innerHeight / 2);
-      }}
-      onPointerLeave={() => {
-        pointerX.set(0);
-        pointerY.set(0);
-      }}
-    >
-      <motion.div className="hero-word" style={{ x: textX, y: textY }} aria-hidden="true">
-        SAREE
-      </motion.div>
-      <div className="hero-radial-glow" aria-hidden="true" />
+    <section className="relative h-[85vh] min-h-[520px] w-full overflow-hidden bg-[#120a0d]">
 
-      <motion.div className="hero-product-layer" style={{ x: productX, y: productY }}>
-        <motion.div
-          className="hero-product"
-          animate={reduceMotion ? undefined : { y: [0, -15, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={i}
-              src={heroSlides[i]?.image}
-              alt={heroSlides[i]?.subtitle ?? "AK Drapes festive saree"}
-              onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
-              className="h-full w-full object-cover"
-              initial={reduceMotion ? false : { opacity: 0, scale: 1.08, clipPath: "inset(0 0 100% 0)" }}
-              animate={{ opacity: 1, scale: 1, clipPath: "inset(0 0 0% 0)" }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </AnimatePresence>
-        </motion.div>
-        <div className="hero-depth-shadow" aria-hidden="true" />
+      {/* FALL ANIMATION ON FIRST LOAD */}
+      <motion.div
+        initial={{ y: -150, opacity: 0 }}
+        animate={hasLoaded? { y: 0, opacity: 1 } : {}}
+        transition={{
+          duration: 1.2,
+          ease: [0.22, 1, 0.36, 1],
+          type: "spring",
+          stiffness: 80,
+          damping: 18
+        }}
+        className="absolute inset-0"
+      >
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={i}
+            src={heroSlides[i]?.image}
+            alt={heroSlides[i]?.subtitle}
+            onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
+            initial={{ y: -80, scale: 1.15, opacity: 0 }}
+            animate={{ y: 0, scale: 1, opacity: 1 }}
+            exit={{ y: 60, opacity: 0 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-black/45" />
       </motion.div>
 
-      <motion.div className="hero-dust" style={{ x: dustX, y: dustY }} aria-hidden="true">
-        {Array.from({ length: 18 }, (_, index) => <span key={index} />)}
-      </motion.div>
-
-      <div className="relative z-20 flex h-full flex-col items-center justify-center px-6 text-center text-hero-foreground">
-        <p className="text-[10px] uppercase tracking-[0.4em] text-hero-muted">
-          AK Drapes Boutique
+      {/* TEXT ALSO FALLS AFTER IMAGE */}
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={hasLoaded? { y: 0, opacity: 1 } : {}}
+        transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white"
+      >
+        <p className="text-[10px] uppercase tracking-[0.4em] text-white/60">
+          {heroSlides[i]?.subtitle?.includes("2026")? "AK Drapes Boutique" : "The Festive Edit 2026"}
         </p>
-        <h1 key={i} className="rise mt-4 max-w-3xl text-[2rem] leading-tight sm:text-6xl">
+        <h1 className="mt-4 font-serif text-[40px] leading-none sm:text-[64px]">
           {heroSlides[i]?.title}
         </h1>
-        <p key={`s${i}`} className="rise mt-4 max-w-md text-sm text-hero-muted sm:text-base">
+        <p className="mt-3 text-[13px] text-white/70">
           {heroSlides[i]?.subtitle}
         </p>
         <Link
           to="/shop"
-          className="jewelry-button mt-9 border border-hero-border bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] text-primary-foreground"
+          className="mt-8 bg-[#7B1E2E] px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] text-white"
         >
           Shop Now
         </Link>
+      </motion.div>
 
-        <div className="absolute bottom-7 flex gap-2">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              aria-label={`Slide ${idx + 1}`}
-              onClick={() => setI(idx)}
-              className={`h-[3px] w-9 transition-all ${idx === i ? "bg-hero-foreground" : "bg-hero-muted/40"}`}
-            />
-          ))}
-        </div>
+      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {heroSlides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setI(idx)}
+            className={`h-[2px] transition-all ${idx === i? "w-8 bg-white" : "w-4 bg-white/30"}`}
+          />
+        ))}
       </div>
     </section>
   );
