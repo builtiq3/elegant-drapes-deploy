@@ -32,7 +32,7 @@ function Hero() {
 
   useEffect(() => {
     setHasLoaded(true);
-    const t = setInterval(() => setI((v) => (v + 1) % heroSlides.length), 5500);
+    const t = setInterval(() => setI((v) => (v + 1) % heroSlides.length), 4500);
     return () => clearInterval(t);
   }, []);
 
