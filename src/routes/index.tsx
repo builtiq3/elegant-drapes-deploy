@@ -30,7 +30,6 @@ function Hero() {
   const [i, setI] = useState(0);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // helper
   const getOptimized = (url: string) => {
     if (!url) return url
     if (url.includes('supabase')) return `${url}?width=1080&quality=75&format=webp`
@@ -43,7 +42,7 @@ function Hero() {
     return () => clearInterval(t);
   }, []);
 
-  // preload NEXT slide only, after 3 sec - not all at once
+  // preload only NEXT slide after 3 sec, not all at once
   useEffect(() => {
     const next = heroSlides[(i + 1) % heroSlides.length]?.image
     if (!next) return
