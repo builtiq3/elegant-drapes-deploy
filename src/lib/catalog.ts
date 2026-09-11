@@ -189,20 +189,25 @@ export function useSettings(): Settings {
       /* ignore */
     }
     let alive = true;
-    supabase
-      .from("settings")
-      .select("whatsapp_number, announcement_text")
-      .eq("id", 1)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (!alive || !data) return;
-        const next: Settings = {
-          whatsapp: data.whatsapp_number || WHATSAPP_PHONE,
-          announcement: data.announcement_text || "",
-        };
-        setSettings(next);
-        window.localStorage.setItem(SETTINGS_CACHE, JSON.stringify(next));
-      });
+    try {
+      void supabase
+        .from("settings")
+        .select("whatsapp_number, announcement_text")
+        .eq("id", 1)
+        .maybeSingle()
+        .then(({ data }) => {
+          if (!alive || !data) return;
+          const next: Settings = {
+            whatsapp: data.whatsapp_number || WHATSAPP_PHONE,
+            announcement: data.announcement_text || "",
+          };
+          setSettings(next);
+          window.localStorage.setItem(SETTINGS_CACHE, JSON.stringify(next));
+        })
+        .catch(() => undefined);
+    } catch {
+      /* missing env */
+    }
     return () => {
       alive = false;
     };
@@ -218,13 +223,20 @@ export function useCloudReviews() {
 
   useEffect(() => {
     let alive = true;
-    supabase
-      .from("reviews")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        if (alive) setReviews((data as unknown as DbReview[]) ?? []);
-      });
+    try {
+      void supabase
+        .from("reviews")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .then(({ data }) => {
+          if (alive) setReviews((data as unknown as DbReview[]) ?? []);
+        })
+        .catch(() => {
+          if (alive) setReviews([]);
+        });
+    } catch {
+      setReviews([]);
+    }
     return () => {
       alive = false;
     };

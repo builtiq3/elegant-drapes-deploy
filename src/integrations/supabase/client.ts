@@ -39,9 +39,15 @@ function createSupabaseClient() {
       ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
       ...(!SUPABASE_PUBLISHABLE_KEY ? ['SUPABASE_PUBLISHABLE_KEY'] : []),
     ];
-    const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Configure Supabase in the deployment environment.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
+    console.error(
+      `[Supabase] Missing ${missing.join(', ')}. Catalog falls back to the static edit until env vars are set.`,
+    );
+    return createClient<Database>('https://placeholder.supabase.co', 'public-anon-placeholder', {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {

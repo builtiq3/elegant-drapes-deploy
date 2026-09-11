@@ -8,10 +8,12 @@ export function TiltCard({
   children,
   className = "",
   max = 12,
+  index = 0,
 }: {
   children: ReactNode;
   className?: string;
   max?: number;
+  index?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -44,6 +46,7 @@ export function TiltCard({
       onMouseMove={onMove}
       onMouseLeave={reset}
       className={`ak-tilt ${className}`}
+      style={{ animationDelay: `${Math.min(index, 8) * 70}ms` }}
     >
       {children}
     </div>

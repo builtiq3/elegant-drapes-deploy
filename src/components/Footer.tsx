@@ -31,8 +31,19 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border py-5 text-center text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-        © {new Date().getFullYear()} AK Drapes Boutique
+      <div className="border-t border-border px-5 py-5 text-center text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <p>© {new Date().getFullYear()} AK Drapes Boutique</p>
+        <p className="mt-2 normal-case tracking-[0.12em]">
+          Made with ♥ by{" "}
+          <a
+            href="https://instagram.com/built.iq"
+            target="_blank"
+            rel="noreferrer"
+            className="text-foreground transition-colors hover:text-primary"
+          >
+            @builtiq
+          </a>
+        </p>
       </div>
     </footer>
   );

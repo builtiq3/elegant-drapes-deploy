@@ -10,7 +10,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const hoverImage = product.images?.[1] || product.images?.[0] || FALLBACK_IMAGE
 
   return (
-    <TiltCard index={index}>
+    <TiltCard index={index} className="group">
       <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] bg-secondary">
         <Link
           to="/product/$id"

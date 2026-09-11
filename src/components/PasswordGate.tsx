@@ -1,6 +1,7 @@
 import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import logo from "@/assets/ak-logo.png.asset.json";
+
+const LOGO = "/favicon.png";
 
 const KEY = "ak-unlocked";
 const PASSWORD = "ak2026";
@@ -20,14 +21,16 @@ export function PasswordGate({ children }: { children: ReactNode }) {
   }, []);
 
   if (isAdmin) return <>{children}</>;
-  if (!ready) return null;
+  if (!ready) {
+    return <div className="min-h-dvh bg-background" aria-hidden="true" />;
+  }
   if (unlocked) return <>{children}</>;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-secondary px-6">
       <div className="w-full max-w-sm rise text-center">
         <img
-          src={logo.url}
+          src={LOGO}
           alt="AK Drapes Boutique"
           className="mx-auto h-28 w-28 rounded-full object-cover shadow-[0_18px_50px_-24px_rgba(123,30,46,0.55)]"
         />

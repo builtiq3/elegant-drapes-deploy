@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
 import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 
-import logo from "@/assets/ak-logo.png.asset.json";
+const LOGO = "/favicon.png";
 
 const PARTICLES = Array.from({ length: 14 }, (_, index) => index);
 
@@ -36,7 +37,7 @@ function PageLoader() {
               />
             ))}
             <motion.img
-              src={logo.url}
+              src={LOGO}
               alt="AK Drapes Boutique"
               className="h-24 w-24 rounded-full object-cover shadow-luxury"
               initial={{ opacity: 0, scale: 0.78, rotateY: 0 }}
@@ -82,7 +83,12 @@ export function LuxuryExperience({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (reduceMotion) return;
-    const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    const lenis = new Lenis({
+      duration: 1.12,
+      smoothWheel: true,
+      touchMultiplier: 1.15,
+      wheelMultiplier: 0.92,
+    });
     let frame = 0;
     const raf = (time: number) => {
       lenis.raf(time);

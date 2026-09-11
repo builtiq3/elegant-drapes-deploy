@@ -46,7 +46,7 @@ function Hero() {
 
   return (
     <section
-      className="hero-stage relative h-[78vh] min-h-[520px] w-full overflow-hidden"
+      className="hero-stage relative h-[72svh] min-h-[420px] w-full overflow-hidden sm:h-[78vh] sm:min-h-[520px]"
       onPointerMove={(event) => {
         if (reduceMotion || event.pointerType === "touch") return;
         pointerX.set(event.clientX - window.innerWidth / 2);
@@ -93,7 +93,7 @@ function Hero() {
         <p className="text-[10px] uppercase tracking-[0.4em] text-hero-muted">
           AK Drapes Boutique
         </p>
-        <h1 key={i} className="rise mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">
+        <h1 key={i} className="rise mt-4 max-w-3xl text-[2rem] leading-tight sm:text-6xl">
           {heroSlides[i]?.title}
         </h1>
         <p key={`s${i}`} className="rise mt-4 max-w-md text-sm text-hero-muted sm:text-base">
