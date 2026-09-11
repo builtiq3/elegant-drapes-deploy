@@ -15,6 +15,7 @@ import { Footer } from "@/components/Footer";
 import { Ticker } from "@/components/Ticker";
 import { PasswordGate } from "@/components/PasswordGate";
 import { Toaster } from "@/components/ui/sonner";
+import { LuxuryExperience } from "@/components/LuxuryExperience";
 
 function NotFoundComponent() {
   return (
@@ -134,15 +135,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PasswordGate>
-        <Ticker />
-        <Header />
-        <main>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer />
-      </PasswordGate>
+      <LuxuryExperience>
+        <PasswordGate>
+          <Ticker />
+          <Header />
+          <main>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <Footer />
+        </PasswordGate>
+      </LuxuryExperience>
       <Toaster position="bottom-center" />
     </QueryClientProvider>
   );

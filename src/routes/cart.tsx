@@ -51,7 +51,7 @@ function Cart() {
           <p className="text-sm text-muted-foreground">Your bag is beautifully empty.</p>
           <Link
             to="/shop"
-            className="mt-8 inline-block border border-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary transition hover:bg-primary hover:text-primary-foreground"
+            className="jewelry-button mt-8 inline-block bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
           >
             Start shopping
           </Link>
@@ -126,7 +126,7 @@ function Cart() {
             target="_blank"
             rel="noreferrer"
             onClick={() => toast.success("Opening WhatsApp with your order")}
-            className="mt-8 block bg-primary px-6 py-4 text-center text-[11px] uppercase tracking-[0.28em] text-primary-foreground transition hover:bg-primary/90"
+            className="jewelry-button mt-8 block bg-primary px-6 py-4 text-center text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
           >
             Order on WhatsApp
           </a>

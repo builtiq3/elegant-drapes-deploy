@@ -1,16 +1,17 @@
 import { Link } from "@tanstack/react-router"
 import { Price } from "@/components/Price"
 import type { Product } from "@/lib/shop"
+import { TiltCard } from "@/components/TiltCard"
 
 const FALLBACK_IMAGE = "/favicon.png"
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const mainImage = product.images?.[0] || FALLBACK_IMAGE
   const hoverImage = product.images?.[1] || product.images?.[0] || FALLBACK_IMAGE
 
   return (
-    <article className="group">
-      <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+    <TiltCard index={index}>
+      <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] bg-secondary">
         <Link
           to="/product/$id"
           params={{ id: product.id }}
@@ -22,7 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             loading="lazy"
             onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
-            className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+            className="product-card-image absolute inset-0 h-full w-full object-cover"
           />
           <img
             src={hoverImage}
@@ -33,10 +34,10 @@ export function ProductCard({ product }: { product: Product }) {
           />
         </Link>
       </div>
-      <div className="mt-3">
+      <div className="relative z-10 px-1 pb-2 pt-4">
         <h3 className="text-sm font-medium">{product.name}</h3>
         <Price product={product} className="text-sm text-muted-foreground" />
       </div>
-    </article>
+    </TiltCard>
   )
 }

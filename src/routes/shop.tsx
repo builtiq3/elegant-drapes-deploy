@@ -110,8 +110,8 @@ function Shop() {
         <Spinner label="Loading the collection" />
       ) : (
       <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
-        {list.map((p) => (
-          <ProductCard key={p.id} product={p} />
+        {list.map((p, index) => (
+          <ProductCard key={p.id} product={p} index={index} />
         ))}
       </div>
       )}

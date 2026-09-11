@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { ProductCard } from "@/components/ProductCard";
 import { Reviews } from "@/components/Reviews";
 import { Spinner } from "@/components/Spinner";
@@ -27,39 +28,80 @@ export const Route = createFileRoute("/")({
 
 function Hero() {
   const [i, setI] = useState(0);
+  const reduceMotion = useReducedMotion();
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 90, damping: 24 });
+  const smoothY = useSpring(pointerY, { stiffness: 90, damping: 24 });
+  const textX = useTransform(smoothX, (value) => value * 0.02);
+  const textY = useTransform(smoothY, (value) => value * 0.02);
+  const productX = useTransform(smoothX, (value) => value * 0.05);
+  const productY = useTransform(smoothY, (value) => value * 0.05);
+  const dustX = useTransform(smoothX, (value) => value * 0.1);
+  const dustY = useTransform(smoothY, (value) => value * 0.1);
   useEffect(() => {
     const t = setInterval(() => setI((v) => (v + 1) % heroSlides.length), 5500);
     return () => clearInterval(t);
   }, []);
 
   return (
-    <section className="relative h-[78vh] min-h-[480px] w-full overflow-hidden">
-      {heroSlides.map((s, idx) => (
-        <img
-          key={idx}
-          src={s.image}
-          alt={s.subtitle}
-          onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ${
-            idx === i ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/60" />
+    <section
+      className="hero-stage relative h-[78vh] min-h-[520px] w-full overflow-hidden"
+      onPointerMove={(event) => {
+        if (reduceMotion || event.pointerType === "touch") return;
+        pointerX.set(event.clientX - window.innerWidth / 2);
+        pointerY.set(event.clientY - window.innerHeight / 2);
+      }}
+      onPointerLeave={() => {
+        pointerX.set(0);
+        pointerY.set(0);
+      }}
+    >
+      <motion.div className="hero-word" style={{ x: textX, y: textY }} aria-hidden="true">
+        SAREE
+      </motion.div>
+      <div className="hero-radial-glow" aria-hidden="true" />
 
-      <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
-        <p className="text-[10px] uppercase tracking-[0.4em] text-white/80">
+      <motion.div className="hero-product-layer" style={{ x: productX, y: productY }}>
+        <motion.div
+          className="hero-product"
+          animate={reduceMotion ? undefined : { y: [0, -15, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={i}
+              src={heroSlides[i]?.image}
+              alt={heroSlides[i]?.subtitle ?? "AK Drapes festive saree"}
+              onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
+              className="h-full w-full object-cover"
+              initial={reduceMotion ? false : { opacity: 0, scale: 1.08, clipPath: "inset(0 0 100% 0)" }}
+              animate={{ opacity: 1, scale: 1, clipPath: "inset(0 0 0% 0)" }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </AnimatePresence>
+        </motion.div>
+        <div className="hero-depth-shadow" aria-hidden="true" />
+      </motion.div>
+
+      <motion.div className="hero-dust" style={{ x: dustX, y: dustY }} aria-hidden="true">
+        {Array.from({ length: 18 }, (_, index) => <span key={index} />)}
+      </motion.div>
+
+      <div className="relative z-20 flex h-full flex-col items-center justify-center px-6 text-center text-hero-foreground">
+        <p className="text-[10px] uppercase tracking-[0.4em] text-hero-muted">
           AK Drapes Boutique
         </p>
         <h1 key={i} className="rise mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">
           {heroSlides[i]?.title}
         </h1>
-        <p key={`s${i}`} className="rise mt-4 max-w-md text-sm text-white/85 sm:text-base">
+        <p key={`s${i}`} className="rise mt-4 max-w-md text-sm text-hero-muted sm:text-base">
           {heroSlides[i]?.subtitle}
         </p>
         <Link
           to="/shop"
-          className="mt-9 border border-white/70 px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] transition hover:bg-white hover:text-primary"
+          className="jewelry-button mt-9 border border-hero-border bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.3em] text-primary-foreground"
         >
           Shop Now
         </Link>
@@ -70,7 +112,7 @@ function Hero() {
               key={idx}
               aria-label={`Slide ${idx + 1}`}
               onClick={() => setI(idx)}
-              className={`h-[3px] w-9 transition-all ${idx === i ? "bg-white" : "bg-white/40"}`}
+              className={`h-[3px] w-9 transition-all ${idx === i ? "bg-hero-foreground" : "bg-hero-muted/40"}`}
             />
           ))}
         </div>
@@ -99,14 +141,14 @@ function Home() {
           <Spinner label="Loading the edit" />
         ) : (
           <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
-            {shown.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {shown.map((p, index) => (
+              <ProductCard key={p.id} product={p} index={index} />
             ))}
           </div>
         )}
         <Link
           to="/shop"
-          className="mt-14 inline-block border border-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary transition hover:bg-primary hover:text-primary-foreground"
+          className="jewelry-button mt-14 inline-block bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
         >
           Shop all drapes
         </Link>

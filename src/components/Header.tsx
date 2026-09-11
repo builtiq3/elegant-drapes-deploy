@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
+import { motion } from "motion/react";
+import { useEffect } from "react";
 
 import { useCart, useWishlist } from "@/lib/shop";
 
@@ -21,12 +23,28 @@ function Count({ n }: { n: number }) {
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const cart = useCart();
   const wishlist = useWishlist();
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
 
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 48);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+    <motion.header
+      layout
+      className={`z-40 border border-border bg-background/85 backdrop-blur-2xl ${
+        scrolled
+          ? "fixed left-1/2 top-5 w-[90%] max-w-6xl -translate-x-1/2 rounded-full shadow-nav"
+          : "sticky top-0 w-full border-x-0 border-t-0"
+      }`}
+      transition={{ type: "spring", stiffness: 180, damping: 24 }}
+    >
       <div className="mx-auto grid max-w-6xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-3">
         <button
           type="button"
@@ -80,7 +98,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-border px-5 py-3 md:hidden">
+        <nav className={`flex flex-col gap-1 border-t border-border bg-background/95 px-5 py-3 backdrop-blur-2xl md:hidden ${scrolled ? "rounded-b-3xl" : ""}`}>
           {NAV.concat([{ to: "/cart", label: "Bag" } as never]).map((n) => (
             <Link
               key={n.to}
@@ -99,6 +117,6 @@ export function Header() {
           </button>
         </nav>
       )}
-    </header>
+    </motion.header>
   );
 }

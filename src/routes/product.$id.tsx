@@ -181,7 +181,7 @@ function ProductDetail() {
         <h1 className="text-3xl">This drape isn’t available</h1>
         <Link
           to="/shop"
-          className="mt-8 inline-block border border-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary transition hover:bg-primary hover:text-primary-foreground"
+          className="jewelry-button mt-8 inline-block bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
         >
           Back to collection
         </Link>
@@ -289,7 +289,7 @@ function ProductDetail() {
               for (let n = 0; n < qty; n++) cartStore.add(product.id);
               toast.success(`${product.name} added to bag`);
             }}
-            className="mt-6 flex w-full items-center justify-center gap-2 bg-primary px-6 py-4 text-[11px] uppercase tracking-[0.28em] text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="jewelry-button mt-6 flex w-full items-center justify-center gap-2 bg-primary px-6 py-4 text-[11px] uppercase tracking-[0.28em] text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
           >
             <ShoppingBag size={15} /> Add to bag
           </button>

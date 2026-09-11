@@ -68,7 +68,7 @@ export function PasswordGate({ children }: { children: ReactNode }) {
           )}
           <button
             type="submit"
-            className="w-full bg-primary px-4 py-3 text-[11px] uppercase tracking-[0.28em] text-primary-foreground transition hover:bg-primary/90"
+            className="jewelry-button w-full bg-primary px-4 py-3 text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
           >
             Enter the boutique
           </button>

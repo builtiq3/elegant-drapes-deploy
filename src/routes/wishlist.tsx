@@ -41,15 +41,15 @@ function Wishlist() {
           </p>
           <Link
             to="/shop"
-            className="mt-8 inline-block border border-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary transition hover:bg-primary hover:text-primary-foreground"
+            className="jewelry-button mt-8 inline-block bg-primary px-10 py-3.5 text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
           >
             Browse the collection
           </Link>
         </div>
       ) : (
         <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
-          {items.map((p) => (
-            <ProductCard key={p!.id} product={p!} />
+          {items.map((p, index) => (
+            <ProductCard key={p!.id} product={p!} index={index} />
           ))}
         </div>
       )}
