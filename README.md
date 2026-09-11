@@ -1,14 +1,6 @@
-# Welcome to your Lovable project
+# AK Drapes Elegance
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+AK Drapes Boutique is a premium, elegant, feminine, mobile-first React + Tailwind saree storefront. The experience includes a boutique header, shop catalog with fabric/color/price filtering, wishlist and cart flows, WhatsApp ordering, product cards, reviews carousel, and a password preview gate.
 
 ## Development
 
@@ -20,10 +12,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS

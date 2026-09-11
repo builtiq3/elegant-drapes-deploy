@@ -10,7 +10,11 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Ticker } from "@/components/Ticker";
+import { PasswordGate } from "@/components/PasswordGate";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +41,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -77,21 +78,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { name: "robots", content: "index, follow" },
+      { name: "author", content: "AK Drapes Boutique" },
+      { name: "description", content: "AK Drapes Boutique — handwoven silk, organza and Banarasi sarees, curated in limited numbers." },
+      { name: "keywords", content: "AK Drapes, handwoven sarees, Banarasi sarees, silk sarees, organza sarees, Indian boutique sarees" },
+      { property: "og:site_name", content: "AK Drapes Boutique" },
+      { property: "og:title", content: "AK Drapes Boutique | Handwoven Festive Sarees" },
+      { property: "og:description", content: "Handwoven sarees and made-to-drape couture." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/favicon.ico.png" },
+      { property: "og:url", content: "https://akdrapesboutique.com/" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AK Drapes Boutique | Handwoven Festive Sarees" },
+      { name: "twitter:description", content: "Handwoven sarees and made-to-drape couture." },
+      { name: "twitter:image", content: "/favicon.ico.png" },
     ],
     links: [
+      { rel: "canonical", href: "https://akdrapesboutique.com/" },
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.ico.png", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +134,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <PasswordGate>
+        <Ticker />
+        <Header />
+        <main>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+      </PasswordGate>
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 }
