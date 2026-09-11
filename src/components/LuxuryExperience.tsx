@@ -3,7 +3,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
-const LOGO = "/favicon.png";
+const LOGO = "/favicon.webp";
 
 const PARTICLES = Array.from({ length: 14 }, (_, index) => index);
 

@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-secondary/60">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-3">
         <div>
-          <img src="/favicon.png" alt="AK Drapes Boutique" className="h-20 w-20 rounded-full object-cover" />
+          <img src="/favicon.webp" alt="AK Drapes Boutique" className="h-20 w-20 rounded-full object-cover" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             AK Drapes Boutique — premium sarees and made-to-drape couture,
             curated for women who dress with intention.

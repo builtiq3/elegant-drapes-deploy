@@ -3,7 +3,7 @@ import { Price } from "@/components/Price"
 import type { Product } from "@/lib/shop"
 import { TiltCard } from "@/components/TiltCard"
 
-const FALLBACK_IMAGE = "/favicon.png"
+const FALLBACK_IMAGE = "/favicon.webp"
 
 // Helper - auto compress without losing clarity
 const getOptimizedUrl = (url: string) => {

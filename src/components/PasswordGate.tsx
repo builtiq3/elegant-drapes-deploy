@@ -1,7 +1,7 @@
 import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 
-const LOGO = "/favicon.png";
+const LOGO = "/favicon.webp";
 
 const KEY = "ak-unlocked";
 const PASSWORD = "ak2026";

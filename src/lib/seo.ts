@@ -11,7 +11,7 @@ export const absoluteUrl = (path: string) =>
 
 /** Absolute URL for an image that may already be absolute. */
 export const absoluteImage = (src?: string | null) =>
-  !src ? absoluteUrl("/favicon.png") : /^https?:\/\//.test(src) ? src : absoluteUrl(src);
+  !src ? absoluteUrl("/favicon.webp") : /^https?:\/\//.test(src) ? src : absoluteUrl(src);
 
 /**
  * Google title for a product.
