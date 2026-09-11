@@ -1,16 +1,6 @@
-# Elegant Drapes Deploy
+# AK Drapes Elegance
 
-https://ak-drapes-elegance.vercel.app/-> i have deployed in vercel gives error but local machine runs.this is edited ak drapes
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/0f7b4034-1948-4217-8cfe-3f3b0dec6642).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+AK Drapes Boutique is a premium, elegant, feminine, mobile-first React + Tailwind saree storefront. The experience includes a boutique header, shop catalog with fabric/color/price filtering, wishlist and cart flows, WhatsApp ordering, product cards, reviews carousel, and a password preview gate.
 
 ## Development
 

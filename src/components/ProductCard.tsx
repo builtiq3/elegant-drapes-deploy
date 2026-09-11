@@ -1,0 +1,42 @@
+import { Link } from "@tanstack/react-router"
+import { Price } from "@/components/Price"
+import type { Product } from "@/lib/shop"
+
+const FALLBACK_IMAGE = "/favicon.png"
+
+export function ProductCard({ product }: { product: Product }) {
+  const mainImage = product.images?.[0] || FALLBACK_IMAGE
+  const hoverImage = product.images?.[1] || product.images?.[0] || FALLBACK_IMAGE
+
+  return (
+    <article className="group">
+      <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+        <Link
+          to="/product/$id"
+          params={{ id: product.id }}
+          aria-label={product.name}
+          className="absolute inset-0 block"
+        >
+          <img
+            src={mainImage}
+            alt={product.name}
+            loading="lazy"
+            onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
+            className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+          />
+          <img
+            src={hoverImage}
+            alt=""
+            loading="lazy"
+            onError={(e) => (e.currentTarget.src = FALLBACK_IMAGE)}
+            className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          />
+        </Link>
+      </div>
+      <div className="mt-3">
+        <h3 className="text-sm font-medium">{product.name}</h3>
+        <Price product={product} className="text-sm text-muted-foreground" />
+      </div>
+    </article>
+  )
+}
