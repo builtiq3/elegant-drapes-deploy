@@ -346,12 +346,3 @@ html.lenis body {
     background: rgba(212, 175, 110, 0.08);
   }
 }
-
-[id*="lovable"],
-[class*="lovable-badge"],
-[class*="lovable-tag"],
-iframe[src*="lovable"],
-a[href*="lovable.dev"],
-a[href*="gptengineer"] {
-  display: none !important;
-}

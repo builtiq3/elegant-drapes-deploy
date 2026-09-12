@@ -77,9 +77,9 @@ function Home() {
       </section>
       <Reviews />
       <section className="mx-auto max-w-3xl px-5 py-20 text-center">
-        <h2 className="text-3xl sm:text-4xl">From the House of <span className="text-[#D18B94] font-medium">zy_by_nilu</span></h2>
+        <h2 className="text-3xl sm:text-4xl">From the House of AK Drapes</h2>
         <div className="gold-rule mx-auto mt-4 h-px w-24" />
-        <p className="mt-6 text-sm leading-loose text-muted-foreground">Every AK Drapes piece is handpicked, not mass-produced. We travel to source the finest authentic designer sarees and curate them in limited numbers — so what arrives at your door feels personal, exclusive, and truly yours. From our studio in Thokot to homes across Mangalore, Dubai & beyond, we personally check, finish, and pack each drape with care. This is slow fashion you will want to live in, and never want to leave.</p>
+        <p className="mt-6 text-sm leading-loose text-muted-foreground">Every AK Drapes piece is handpicked, not mass-produced. We travel to source the finest authentic designer sarees and curate them in limited numbers — so what arrives at your door feels personal, exclusive, and truly yours. From our studio to homes across India and beyond, we personally check, finish, and pack each drape with care. This is slow fashion you will want to live in, and never want to leave.</p>
       </section>
     </>
   );
