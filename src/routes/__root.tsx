@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Ticker } from "@/components/Ticker";
-import { PasswordGate } from "@/components/PasswordGate";
+
 import { Toaster } from "@/components/ui/sonner";
 import { LuxuryExperience } from "@/components/LuxuryExperience";
 
@@ -136,7 +136,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <LuxuryExperience>
-        <PasswordGate>
+        
           <Ticker />
           <Header />
           <main>
@@ -144,7 +144,7 @@ function RootComponent() {
             <Outlet />
           </main>
           <Footer />
-        </PasswordGate>
+        
       </LuxuryExperience>
       <Toaster position="bottom-center" />
     </QueryClientProvider>
