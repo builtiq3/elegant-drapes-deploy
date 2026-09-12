@@ -20,10 +20,8 @@ export const Route = createFileRoute("/cart")({
       {
         name: "description",
         content:
-          "Review your AK Drapes selection and place your order over WhatsApp with our styling team.",
+          "Review your AK Drapes selection and place your order over WhatsApp.",
       },
-      { property: "og:title", content: "Shopping Bag | AK Drapes Boutique" },
-      { property: "og:description", content: "Review your selection and order on WhatsApp." },
     ],
   }),
   component: Cart,
@@ -36,6 +34,8 @@ function Cart() {
   const items = useCart();
   const total = cartTotal(items);
 
+  const orderLink = whatsapp? whatsappOrderLink(items, whatsapp) : "#";
+
   return (
     <section className="mx-auto max-w-4xl px-5 py-14">
       <div className="text-center">
@@ -46,7 +46,7 @@ function Cart() {
         <div className="gold-rule mx-auto mt-4 h-px w-24" />
       </div>
 
-      {items.length === 0 ? (
+      {items.length === 0? (
         <div className="py-20 text-center">
           <p className="text-sm text-muted-foreground">Your bag is beautifully empty.</p>
           <Link
@@ -76,22 +76,13 @@ function Cart() {
                       {p.fabric} · {p.color}
                     </p>
                     <p className="mt-2 text-sm text-primary">{formatPrice(p.price)}</p>
-
                     <div className="mt-4 flex items-center gap-4">
                       <div className="flex items-center border border-border">
-                        <button
-                          aria-label="Decrease quantity"
-                          className="px-3 py-2 hover:text-primary"
-                          onClick={() => cartStore.setQty(item.id, item.qty - 1)}
-                        >
+                        <button className="px-3 py-2 hover:text-primary" onClick={() => cartStore.setQty(item.id, item.qty - 1)}>
                           <Minus size={13} />
                         </button>
                         <span className="w-8 text-center text-sm">{item.qty}</span>
-                        <button
-                          aria-label="Increase quantity"
-                          className="px-3 py-2 hover:text-primary"
-                          onClick={() => cartStore.setQty(item.id, item.qty + 1)}
-                        >
+                        <button className="px-3 py-2 hover:text-primary" onClick={() => cartStore.setQty(item.id, item.qty + 1)}>
                           <Plus size={13} />
                         </button>
                       </div>
@@ -115,28 +106,26 @@ function Cart() {
           </ul>
 
           <div className="mt-8 flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
-              Total
-            </span>
+            <span className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground">Total</span>
             <span className="font-display text-2xl text-primary">{formatPrice(total)}</span>
           </div>
 
           <a
-           <a
-  href={whatsapp ? whatsappOrderLink(items, whatsapp) : "#"}
-  onClick={(e) => {
-    if (!whatsapp) {
-      e.preventDefault();
-      toast.error("Loading WhatsApp number...");
-    }
-  }}
+            href={orderLink}
             target="_blank"
             rel="noreferrer"
-            onClick={() => toast.success("Opening WhatsApp with your order")}
+            onClick={() => {
+              if (!whatsapp) {
+                toast.error("Loading WhatsApp number...");
+                return;
+              }
+              toast.success("Opening WhatsApp with your order");
+            }}
             className="jewelry-button mt-8 block bg-primary px-6 py-4 text-center text-[11px] uppercase tracking-[0.28em] text-primary-foreground"
           >
             Order on WhatsApp
           </a>
+
           <button
             onClick={() => {
               cartStore.clear();

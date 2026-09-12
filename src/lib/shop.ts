@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-import { getWhatsappNumber } from "@/lib/settings";
 
 export let WHATSAPP_PHONE = "";
-if (typeof window !== "undefined") {
-  getWhatsappNumber().then(s => {
-    if (s.whatsapp) WHATSAPP_PHONE = s.whatsapp;
-  });
-}
 
 export type Product = {
   id: string;
@@ -26,8 +20,6 @@ export type Product = {
 };
 
 export const FALLBACK_IMAGE = "/hero1.webp";
-
-// No more fake sarees - only Supabase products will show
 export const products: Product[] = [];
 
 let runtimeProducts: Product[] = [];
@@ -81,11 +73,7 @@ export const cartTotal = (items: CartItem[]) => items.reduce((sum, i) => sum + (
 export function whatsappOrderLink(items: CartItem[], phone?: string) {
   const lines = items.map((i, idx) => { const p = productById(i.id); return `${idx + 1}. ${p?.name} - Rs. ${(p?.price ?? 0).toLocaleString("en-IN")} x ${i.qty}`; });
   const text = ["Hi AK Drapes! I want to order:", ...lines, "", `Total: Rs. ${cartTotal(items).toLocaleString("en-IN")}`, "Please confirm availability."].join("\n");
-  const number = (phone || WHATSAPP_PHONE).replace(/[^0-9]/g, "");
+  const number = (phone || "").replace(/[^0-9]/g, "");
+  if (!number) return "#";
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
-}
-
-export async function whatsappOrderLinkAsync(items: CartItem[]) {
-  const { whatsapp } = await getWhatsappNumber();
-  return whatsappOrderLink(items, whatsapp);
 }
