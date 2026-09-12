@@ -122,7 +122,14 @@ function Cart() {
           </div>
 
           <a
-            href={whatsappOrderLink(items, whatsapp)}
+           <a
+  href={whatsapp ? whatsappOrderLink(items, whatsapp) : "#"}
+  onClick={(e) => {
+    if (!whatsapp) {
+      e.preventDefault();
+      toast.error("Loading WhatsApp number...");
+    }
+  }}
             target="_blank"
             rel="noreferrer"
             onClick={() => toast.success("Opening WhatsApp with your order")}

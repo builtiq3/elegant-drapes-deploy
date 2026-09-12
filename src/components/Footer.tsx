@@ -1,8 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Mail, Phone } from "lucide-react";
-//import logo from "@/assets/ak-logo.png.asset.json";
+import { useEffect, useState } from "react";
+import { getWhatsappNumber } from "@/lib/settings";
 
 export function Footer() {
+  const [waNumber, setWaNumber] = useState("");
+  useEffect(() => {
+    getWhatsappNumber().then(s => {
+      if (s.whatsapp) setWaNumber(s.whatsapp);
+    });
+  }, []);
+
   return (
     <footer className="mt-24 border-t border-border bg-secondary/60">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-3">
@@ -25,7 +33,12 @@ export function Footer() {
         <div>
           <h4 className="text-sm uppercase tracking-[0.22em]">Atelier</h4>
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><Phone size={14} /> +91 9880253666</li>
+            <li className="flex items-center gap-2">
+              <Phone size={14} />
+              <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className="hover:text-primary">
+                {waNumber? `+${waNumber}` : "Loading..."}
+              </a>
+            </li>
             <li className="flex items-center gap-2"><Mail size={14} /> care@akdrapes.com</li>
             <li className="flex items-center gap-2"><Instagram size={14} /> @akdrapesboutique</li>
           </ul>
