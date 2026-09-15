@@ -54,7 +54,7 @@ export function Footer() {
             rel="noreferrer"
             className="text-foreground transition-colors hover:text-primary"
           >
-            @builtd_.iq
+            @build_.iq
           </a>
         </p>
       </div>
