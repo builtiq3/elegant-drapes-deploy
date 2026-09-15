@@ -49,12 +49,12 @@ export function Footer() {
         <p className="mt-2 normal-case tracking-[0.12em]">
           Made with ♥ by{" "}
           <a
-            href="https://instagram.com/built.iq"
+            href="https://instagram.com/build_.iq"
             target="_blank"
             rel="noreferrer"
             className="text-foreground transition-colors hover:text-primary"
           >
-            @builtiq
+            @builtd_.iq
           </a>
         </p>
       </div>
