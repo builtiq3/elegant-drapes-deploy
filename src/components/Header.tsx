@@ -1,7 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Menu, ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
-import { useCart, useWishlist } from "@/lib/shop";
+import { useEffect, useState } from "react";
+import { COUNTRIES, getCountry, setCountry, useCart, useWishlist, type CountryCode } from "@/lib/shop";
+
+function CountrySelect() {
+  const [value, setValue] = useState<CountryCode>("IN");
+  useEffect(() => setValue(getCountry()), []);
+  return (
+    <select
+      aria-label="Choose country"
+      value={value}
+      onChange={(e) => setCountry(e.target.value as CountryCode)}
+      className="bg-transparent text-[11px] uppercase tracking-[0.15em] outline-none cursor-pointer"
+    >
+      {COUNTRIES.map((c) => (
+        <option key={c.code} value={c.code}>{c.label} ({c.currency})</option>
+      ))}
+    </select>
+  );
+}
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -60,6 +77,7 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-5">
+            <CountrySelect />
             <Link to="/wishlist" className="relative hover:text-[#7B1E2E] transition-colors"><Heart size={20} strokeWidth={1.5}/><Count n={wishlist.length}/></Link>
             <Link to="/cart" className="relative hover:text-[#7B1E2E] transition-colors"><ShoppingBag size={20} strokeWidth={1.5}/><Count n={cartCount}/></Link>
           </div>
