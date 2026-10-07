@@ -20,7 +20,7 @@ export const absoluteImage = (src?: string | null) =>
 export function productSeoTitle(p: {
   name: string;
   fabric?: string;
-  seoTitle?: string | null;
+  seoTitle?: string | null | undefined;
 }) {
   const custom = (p.seoTitle ?? "").trim();
   if (custom) return custom;
