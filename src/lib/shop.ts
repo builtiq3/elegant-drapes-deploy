@@ -35,7 +35,30 @@ export const heroSlides = [
   { image: "/hero1.webp", title: "ORGANZA", subtitle: "Limited festive pieces" },
 ];
 
-export const formatPrice = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+// Country / currency. Product prices are stored in INR; others are converted.
+export const COUNTRIES = [
+  { code: "IN", label: "India", currency: "INR", symbol: "₹", perInr: 1, locale: "en-IN" },
+  { code: "AE", label: "UAE", currency: "AED", symbol: "AED ", perInr: 1 / 22.7, locale: "en-AE" },
+  { code: "QA", label: "Qatar", currency: "QAR", symbol: "QAR ", perInr: 1 / 22.9, locale: "en-QA" },
+] as const;
+export type CountryCode = (typeof COUNTRIES)[number]["code"];
+const COUNTRY_KEY = "ak-country";
+export function getCountry(): CountryCode {
+  if (typeof window === "undefined") return "IN";
+  const v = localStorage.getItem(COUNTRY_KEY);
+  return COUNTRIES.some((c) => c.code === v) ? (v as CountryCode) : "IN";
+}
+export function setCountry(code: CountryCode) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(COUNTRY_KEY, code);
+  window.location.reload();
+}
+
+export const formatPrice = (n: number) => {
+  const c = COUNTRIES.find((x) => x.code === getCountry()) ?? COUNTRIES[0];
+  const v = c.code === "IN" ? n : Math.round(n * c.perInr);
+  return `${c.symbol}${v.toLocaleString(c.locale)}`;
+};
 
 type CartItem = { id: string; qty: number };
 const listeners = new Set<() => void>();
