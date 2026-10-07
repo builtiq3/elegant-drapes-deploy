@@ -17,6 +17,7 @@ export type Product = {
   hasOffer?: boolean;
   offerPrice?: number | null;
   tag?: string;
+  seoTitle?: string | null;
 };
 
 export const FALLBACK_IMAGE = "/hero1.webp";

@@ -31,8 +31,8 @@ const btnClass = "w-full bg-primary px-6 py-4 text-[11px] uppercase tracking-[0.
 const checkAdmin = createServerFn({ method: "POST" })
 .validator((d: { user: string; pass: string }) => d)
 .handler(async ({ data }) => {
-    const envUser = process.env.ADMIN_USER;
-    const envPass = process.env.ADMIN_PASS;
+    const envUser = process.env['ADMIN_USER'];
+    const envPass = process.env['ADMIN_PASS'];
     if (!envUser ||!envPass) return false;
     return data.user === envUser && data.pass === envPass;
   });

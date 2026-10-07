@@ -203,8 +203,7 @@ export function useSettings(): Settings {
           };
           setSettings(next);
           window.localStorage.setItem(SETTINGS_CACHE, JSON.stringify(next));
-        })
-        .catch(() => undefined);
+        }, () => undefined);
     } catch {
       /* missing env */
     }
@@ -230,8 +229,7 @@ export function useCloudReviews() {
         .order("created_at", { ascending: false })
         .then(({ data }) => {
           if (alive) setReviews((data as unknown as DbReview[]) ?? []);
-        })
-        .catch(() => {
+        }, () => {
           if (alive) setReviews([]);
         });
     } catch {
