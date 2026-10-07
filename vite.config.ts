@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [
     tanstackStart(),
-    nitro(process.env['VERCEL'] ? { preset: "vercel" } : { output: { dir: "dist" } }),
+    nitro(process.env['VERCEL'] ? { preset: "vercel" } : {}),
     viteReact(),
     tsconfigPaths(),
     tailwindcss(),
